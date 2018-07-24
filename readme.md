@@ -8,20 +8,25 @@
 ## How to run
 - Install [docker](https://docs.docker.com/install/).
 - Install [docker composer](https://docs.docker.com/compose/install/)
-- Run ```
+- Run
+```
 docker run --rm -v $(pwd):/app composer/composer install
 ```
-- Run ```
+- Run
+```
 docker-compose up
 ```
-- Run ```
+- Run
+```
 cp .env.example .env
 ```
-- Run ```
+- Run
+```
 docker-compose exec app php artisan key:generate
 docker-compose exec app php artisan optimize
 ```
-- Final step. Run ```
+- Final step. Run
+```
 docker-compose up
 ```
 - The application will now be ready to use go ahead and hit http://localhost in your browser and you’ll presented with this lovely screen.
