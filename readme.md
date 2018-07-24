@@ -2,6 +2,7 @@
 ## Docker service
 
 - nginx
+- postgres
 - php
 
 ## How to run
