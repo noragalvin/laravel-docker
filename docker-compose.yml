@@ -1,41 +1,43 @@
 version: '3'
 services:
-
-  # The Application
+  redis:
+      image: redis
+      container_name: redis_example
+      ports:
+        - "6379:6379"
   app:
+    container_name: app_example
     build:
-      context: ./
-      dockerfile: app.dockerfile
+      context: ./docker/php
+      dockerfile: Dockerfile
     working_dir: /var/www
-    volumes:
+    volumes: 
       - ./:/var/www
-    environment:
-      - "DB_PORT=3306"
-      - "DB_HOST=database"
-
-  # The Web Server
-  web:
+  web:  
+    container_name: web_example 
     build:
-      context: ./
-      dockerfile: web.dockerfile
+      context: ./docker/nginx
+      dockerfile: Dockerfile
     working_dir: /var/www
     volumes:
       - ./:/var/www
     ports:
-      - 8080:80
-
-  # The Database
-  database:
-    image: mysql:5.6
+      - 80:80
+    depends_on: 
+      - app
+      - postgres
+      - redis
+  postgres:
+    container_name: postgre_example
+    image: postgres:10.3
     volumes:
-      - dbdata:/var/lib/mysql
+      - pgdata:/var/lib/postgres
     environment:
-      - "MYSQL_DATABASE=homestead"
-      - "MYSQL_USER=homestead"
-      - "MYSQL_PASSWORD=secret"
-      - "MYSQL_ROOT_PASSWORD=secret"
+        - POSTGRES_DB=exampledb
+        - POSTGRES_USER=nora
+        - POSTGRES_PASSWORD=secret
     ports:
-        - "33061:3306"
+        - "54320:5432"
 
 volumes:
-  dbdata:
+  pgdata:
